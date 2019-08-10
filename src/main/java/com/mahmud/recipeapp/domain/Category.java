@@ -1,4 +1,4 @@
-package com.mahmud.recipeapp.Domain;
+package com.mahmud.recipeapp.domain;
 
 import javax.persistence.*;
 import java.util.Set;

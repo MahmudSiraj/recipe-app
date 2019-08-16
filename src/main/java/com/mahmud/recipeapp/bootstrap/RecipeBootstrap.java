@@ -4,15 +4,18 @@ import com.mahmud.recipeapp.domain.*;
 import com.mahmud.recipeapp.repositories.CategoryRepository;
 import com.mahmud.recipeapp.repositories.RecipeRepository;
 import com.mahmud.recipeapp.repositories.UnitOfMeasureRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Component
 public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
@@ -27,8 +30,9 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     }
 
     @Override
+    @Transactional
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-
+        log.debug("Data loaded to repository...");
         recipeRepository.saveAll(getRecipes());
     }
 
@@ -135,17 +139,15 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
                 "For a deviled egg version with guacamole, try our Guacamole Deviled Eggs!");
 
         perfectGuacamole.setNotes(perfectGuacamoleNotes);
-        perfectGuacamoleNotes.setRecipe(perfectGuacamole);
 
-        perfectGuacamole.getIngredients().add(new Ingredient("ripe avocados", new BigDecimal(2), eachUOM, perfectGuacamole));
-        perfectGuacamole.getIngredients().add(new Ingredient("Kosher salt", new BigDecimal(0.5), teaspoonUOM, perfectGuacamole));
-        perfectGuacamole.getIngredients().add(new Ingredient("lime juice", new BigDecimal(1), tablespoonUOM, perfectGuacamole));
-        perfectGuacamole.getIngredients().add(new Ingredient("red onion", new BigDecimal(0.25), cupUOM, perfectGuacamole));
-        perfectGuacamole.getIngredients().add(new Ingredient("serrano chillies", new BigDecimal(2), eachUOM, perfectGuacamole));
-        perfectGuacamole.getIngredients().add(new Ingredient("cilantro", new BigDecimal(2), tablespoonUOM, perfectGuacamole));
-        perfectGuacamole.getIngredients().add(new Ingredient("black pepper", new BigDecimal(1), dashUOM, perfectGuacamole));
-        perfectGuacamole.getIngredients().add(new Ingredient("tomato", new BigDecimal(0.5), eachUOM, perfectGuacamole));
-
+        perfectGuacamole.addIngredient(new Ingredient("ripe avocados", new BigDecimal(2), eachUOM));
+        perfectGuacamole.addIngredient(new Ingredient("Kosher salt", new BigDecimal(0.5), teaspoonUOM));
+        perfectGuacamole.addIngredient(new Ingredient("lime juice", new BigDecimal(1), tablespoonUOM));
+        perfectGuacamole.addIngredient(new Ingredient("red onion", new BigDecimal(0.25), cupUOM));
+        perfectGuacamole.addIngredient(new Ingredient("serrano chillies", new BigDecimal(2), eachUOM));
+        perfectGuacamole.addIngredient(new Ingredient("cilantro", new BigDecimal(2), tablespoonUOM));
+        perfectGuacamole.addIngredient(new Ingredient("black pepper", new BigDecimal(1), dashUOM));
+        perfectGuacamole.addIngredient(new Ingredient("tomato", new BigDecimal(0.5), eachUOM));
 
         perfectGuacamole.getCategories().add(mexicanCategory);
         perfectGuacamole.getCategories().add(americanCategory);

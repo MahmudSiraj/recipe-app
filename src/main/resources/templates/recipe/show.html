@@ -32,8 +32,8 @@
                                 <h5>Categories:</h5>
                             </div>
                             <div class="col-md-9">
-                                <ul th:each="category:${recipe.categories}">
-                                    <li th:text="${category.description}">text</li>
+                                <ul>
+                                    <li th:each="category:${recipe.categories}" th:text="${category.getDescription()}">text</li>
                                 </ul>
                             </div>
                         </div>
@@ -88,8 +88,8 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <ul th:each="ingredient:${recipe.ingredients}">
-                                    <li th:text="${ingredient.amount} + ' ' + ${ingredient.uom.uom} + ' ' + ${ingredient.description}">text</li>
+                                <ul>
+                                    <li th:each="ingredient:${recipe.ingredients}" th:text="${ingredient.amount} + ' ' + ${ingredient.uom.uom} + ' ' + ${ingredient.description}">text</li>
                                 </ul>
                             </div>
                         </div>
